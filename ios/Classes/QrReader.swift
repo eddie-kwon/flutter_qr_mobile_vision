@@ -110,7 +110,7 @@ class QrReader: NSObject {
   let cameraPosition = AVCaptureDevice.Position.back
   let qrCallback: (_:String) -> Void
   
-  init(targetWidth: Int, targetHeight: Int, textureRegistry: FlutterTextureRegistry, options: VisionBarcodeDetectorOptions, qrCallback: @escaping (_:String) -> Void) {
+  init(targetWidth: Int, targetHeight: Int, textureRegistry: FlutterTextureRegistry, options: VisionBarcodeDetectorOptions, qrCallback: @escaping (_:String) -> Void) throws {
     self.targetWidth = targetWidth
     self.targetHeight = targetHeight
     self.textureRegistry = textureRegistry
@@ -139,7 +139,7 @@ class QrReader: NSObject {
     }
     
     // catch?
-    let input = try! AVCaptureDeviceInput.init(device: captureDevice)
+    let input = try AVCaptureDeviceInput.init(device: captureDevice)
     previewSize = CMVideoFormatDescriptionGetDimensions(captureDevice.activeFormat.formatDescription)
     
     let output = AVCaptureVideoDataOutput()
