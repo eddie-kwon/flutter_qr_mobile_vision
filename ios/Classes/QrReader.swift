@@ -95,6 +95,10 @@ protocol QrReaderResponses {
   func qrReceived(code: String)
 }
 
+enum QRReaderError : Error {
+ case NoCaptureDeviceError
+}
+
 class QrReader: NSObject {
   let targetWidth: Int
   let targetHeight: Int
@@ -135,7 +139,11 @@ class QrReader: NSObject {
     }
     
     if captureDevice == nil {
-      captureDevice = AVCaptureDevice.default(for: AVMediaType.video)!
+      captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+    }
+
+    if captureDevice == nil {
+      throw QRReaderError.NoCaptureDeviceError
     }
     
     // catch?
